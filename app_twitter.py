@@ -7,6 +7,7 @@ import nltk
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
 from wordcloud import WordCloud
 from nltk.corpus import stopwords
+import io
 
 st.title('Analisis Sentimen Data X/Twitter: AI-replacing-jobs')
 
@@ -45,9 +46,9 @@ if df is not None:
     st.write('5 Baris Pertama Data:')
     st.dataframe(df.head())
     st.write('Info DataFrame:')
-    buffer = []
+    buffer = io.StringIO()
     df.info(buf=buffer)
-    st.text('\n'.join(buffer))
+    st.text(buffer.getvalue())
     st.write('Statistik Deskriptif:')
     st.dataframe(df.describe())
     st.write('Jumlah Nilai Hilang per Kolom:')
