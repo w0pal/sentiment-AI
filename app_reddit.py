@@ -63,11 +63,10 @@ if df is not None:
     st.write(df['type'].value_counts())
 
     # Data cleaning
-    if 'text' in df.columns:
-        df.dropna(subset=['text'], inplace=True)
+    df.dropna(subset=['text'], inplace=True)
     df['content'] = ''
-    df.loc[df['type'] == 'post', 'content'] = df['title'].fillna('') + ' ' + df['text'].fillna('') if 'title' in df.columns and 'text' in df.columns else ''
-    df.loc[df['type'] == 'comment', 'content'] = df['text'] if 'text' in df.columns else ''
+    df.loc[df['type'] == 'post', 'content'] = df['title'].fillna('') + ' ' + df['text'].fillna('')
+    df.loc[df['type'] == 'comment', 'content'] = df['text']
     if 'title' in df.columns and 'text' in df.columns:
         df.drop(columns=['title', 'text'], inplace=True)
     elif 'text' in df.columns:
@@ -145,26 +144,14 @@ if df is not None:
         ax.set_title(title, fontsize=18)
         ax.axis('off')
         st.pyplot(fig)
-
     st.write('Word Cloud - Sentimen Positif')
     positive_text = ' '.join(df[df['sentiment_label'] == 'Positive']['cleaned_content'])
-    if positive_text.strip():
-        generate_wordcloud(positive_text, 'Word Cloud - Sentimen Positif')
-    else:
-        st.info('Tidak ada data untuk Word Cloud Sentimen Positif.')
-
+    generate_wordcloud(positive_text, 'Word Cloud - Sentimen Positif')
     st.write('Word Cloud - Sentimen Negatif')
     negative_text = ' '.join(df[df['sentiment_label'] == 'Negative']['cleaned_content'])
-    if negative_text.strip():
-        generate_wordcloud(negative_text, 'Word Cloud - Sentimen Negatif')
-    else:
-        st.info('Tidak ada data untuk Word Cloud Sentimen Negatif.')
-
+    generate_wordcloud(negative_text, 'Word Cloud - Sentimen Negatif')
     st.write('Word Cloud - Sentimen Netral')
     neutral_text = ' '.join(df[df['sentiment_label'] == 'Neutral']['cleaned_content'])
-    if neutral_text.strip():
-        generate_wordcloud(neutral_text, 'Word Cloud - Sentimen Netral')
-    else:
-        st.info('Tidak ada data untuk Word Cloud Sentimen Netral.')
+    generate_wordcloud(neutral_text, 'Word Cloud - Sentimen Netral')
 else:
     st.warning('Data belum dimuat. Silakan upload file CSV yang sesuai.')
