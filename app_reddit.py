@@ -145,14 +145,26 @@ if df is not None:
         ax.set_title(title, fontsize=18)
         ax.axis('off')
         st.pyplot(fig)
+
     st.write('Word Cloud - Sentimen Positif')
     positive_text = ' '.join(df[df['sentiment_label'] == 'Positive']['cleaned_content'])
-    generate_wordcloud(positive_text, 'Word Cloud - Sentimen Positif')
+    if positive_text.strip():
+        generate_wordcloud(positive_text, 'Word Cloud - Sentimen Positif')
+    else:
+        st.info('Tidak ada data untuk Word Cloud Sentimen Positif.')
+
     st.write('Word Cloud - Sentimen Negatif')
     negative_text = ' '.join(df[df['sentiment_label'] == 'Negative']['cleaned_content'])
-    generate_wordcloud(negative_text, 'Word Cloud - Sentimen Negatif')
+    if negative_text.strip():
+        generate_wordcloud(negative_text, 'Word Cloud - Sentimen Negatif')
+    else:
+        st.info('Tidak ada data untuk Word Cloud Sentimen Negatif.')
+
     st.write('Word Cloud - Sentimen Netral')
     neutral_text = ' '.join(df[df['sentiment_label'] == 'Neutral']['cleaned_content'])
-    generate_wordcloud(neutral_text, 'Word Cloud - Sentimen Netral')
+    if neutral_text.strip():
+        generate_wordcloud(neutral_text, 'Word Cloud - Sentimen Netral')
+    else:
+        st.info('Tidak ada data untuk Word Cloud Sentimen Netral.')
 else:
     st.warning('Data belum dimuat. Silakan upload file CSV yang sesuai.')
