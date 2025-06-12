@@ -63,10 +63,11 @@ if df is not None:
     st.write(df['type'].value_counts())
 
     # Data cleaning
-    df.dropna(subset=['text'], inplace=True)
+    if 'text' in df.columns:
+        df.dropna(subset=['text'], inplace=True)
     df['content'] = ''
-    df.loc[df['type'] == 'post', 'content'] = df['title'].fillna('') + ' ' + df['text'].fillna('')
-    df.loc[df['type'] == 'comment', 'content'] = df['text']
+    df.loc[df['type'] == 'post', 'content'] = df['title'].fillna('') + ' ' + df['text'].fillna('') if 'title' in df.columns and 'text' in df.columns else ''
+    df.loc[df['type'] == 'comment', 'content'] = df['text'] if 'text' in df.columns else ''
     if 'title' in df.columns and 'text' in df.columns:
         df.drop(columns=['title', 'text'], inplace=True)
     elif 'text' in df.columns:
