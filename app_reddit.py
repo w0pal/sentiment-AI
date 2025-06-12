@@ -17,7 +17,7 @@ uploaded_file = st.sidebar.file_uploader('Upload file CSV Reddit', type=['csv'])
 if uploaded_file:
     file_name = uploaded_file
 else:
-    file_name = 'reddit_ai_work_sentiment_data_processed.csv'  # fallback default
+    file_name = 'reddit_ai_work_sentiment_data.csv'  # fallback default
 
 # Download resource NLTK
 try:
